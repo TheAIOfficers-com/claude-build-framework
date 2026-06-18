@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "note": "Restrict what Claude may do. Tighten per project. Never allow unsupervised production access.",
+    "allow": [],
+    "deny": []
+  },
+  "model": {
+    "note": "Model tiering per Layer 10: strong model for planning/audit, lighter for routine edits."
+  },
+  "hooks": {
+    "note": "Wire safety hooks here (see hooks/README.md). Set up and verify with Claude Code."
+  }
+}
