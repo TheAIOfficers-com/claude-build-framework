@@ -6,6 +6,29 @@ superseded by a new entry.
 
 ---
 
+## v1.3.0 — 2026-07-06
+
+**Source:** founder decision (moving framework changes to pull-request review on the public repo).
+
+### Added
+- `GOVERNANCE.md` Section 5 — the owner's pull-request review process, written for a
+  non-technical owner: the five-step review ritual (read the description, AI audit with a
+  copy-paste prompt, verdict-based decision, cross-model second opinion for substantial changes,
+  owner-only merge), the one-way rule (changes may harden the framework, never soften it), and
+  instant red flags. **Why:** on a public repo anyone can propose changes, and these documents
+  are executable policy for AI builders — a one-line softening disarms a gate on every future
+  build, so review is a governance act, not a formality.
+- `CONTRIBUTING.md` — rules for outside contributors: one topic per PR, plain-language
+  descriptions, changelog entry required, house style, what gets accepted vs rejected.
+
+### Changed
+- `GOVERNANCE.md` Section 3 Source A: the pull-request method is now the standard for all
+  canonical-file changes (direct pushes to main retired); `PROPOSED-RULES.md` remains the quick
+  capture queue during builds.
+- `README.md` license/contributions line points to `CONTRIBUTING.md`.
+
+---
+
 ## v1.2.0 — 2026-07-06
 
 **Source:** founder decision.

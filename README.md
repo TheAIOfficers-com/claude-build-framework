@@ -41,5 +41,6 @@ Start at [ONBOARDING.md](ONBOARDING.md). Work is accepted through the
 
 ## License & contributions
 
-Rules change only through the process in [GOVERNANCE.md](GOVERNANCE.md) — propose changes via
-[PROPOSED-RULES.md](PROPOSED-RULES.md) or a pull request; the owner reviews and merges.
+Contributions welcome — read [CONTRIBUTING.md](CONTRIBUTING.md) first. Rules change only through
+the review process in [GOVERNANCE.md](GOVERNANCE.md): every pull request is audited independently
+and the owner makes the final merge decision.
