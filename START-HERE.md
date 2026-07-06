@@ -37,6 +37,26 @@ terminal version. Either works. Sign in when it asks.
 
 That's the whole setup. You never repeat Step 0.
 
+## Before your real project: do one practice run (30 minutes, strongly recommended)
+
+Your first-ever project should be a toy you intend to throw away — so your first experience of the
+gates, mockups, and reviews happens at zero stakes. The framework has a built-in exception for
+exactly this ("throwaway prototypes the founder explicitly labels as throwaway").
+
+Do Steps 1–2 below with a project named `practice-run`, but paste this as the first prompt instead:
+
+> This is a THROWAWAY practice project — I'm learning the framework, and we'll delete this after.
+> Build the smallest thing that exercises the whole loop once: a one-page tool of your suggestion.
+> Move fast but narrate each framework step as you hit it — the gate, the mockups, the audit, the
+> Gap Report, the Definition of Done — one line each, so I see the machinery work.
+
+Thirty minutes later you'll have seen every gate fire once, approved a mockup, read a Gap Report,
+and clicked through a Definition-of-Done certification. THEN start your real project, where the
+same steps run at full depth. Delete the practice folder when done.
+
+Want to see what finished planning documents look like first? Open `example-project/` — a complete
+worked example with notes explaining why each document says what it says.
+
 ## Step 1 — Create a project (one command)
 
 Open a terminal in the folder where you want the project to live:
@@ -61,8 +81,9 @@ The command does everything technical for you: creates the project folder, copie
 documents (empty, ready to fill), writes the project's rule file so every AI session automatically
 follows this framework, records which framework version the project uses, and starts version history.
 
-It ends with a green **DONE** and tells you the next step. If it prints an error instead, read it —
-the messages are written in plain language (most common: the folder already exists).
+It ends with a green **DONE** and tells you the next step. If it prints an error instead — most
+often Windows blocking scripts on first run, or the folder already existing — the fixes are in
+`TROUBLESHOOTING.md`, item 1 onward, in plain language.
 
 **No terminal at all?** Fallback: create a folder yourself, copy the framework's
 `project-docs-template` folder into it, rename the copy `project-docs`, and in Step 2 add one line
@@ -123,6 +144,25 @@ Say these in any session — they trigger framework machinery:
   item, and show me the evidence."
 - Wants to add a new connector or plugin → it must explain, in plain language, what that tool can
   see and do before you say yes. If the explanation is vague, the answer is no.
+
+## What this will roughly cost (set expectations before the first bill)
+
+Ballparks, not promises — prices change and usage varies, which is why the framework makes cost
+visible and capped rather than guessing for you:
+
+- **Building:** an AI coding subscription (fixed monthly) or usage-based billing. A focused build
+  session typically costs less than a takeaway meal; an all-day heavy session can cost more. The
+  token-economy rules below exist to keep this at the low end.
+- **Running a small product:** hosting, database, and email for a low-traffic app commonly lands
+  in the tens-of-dollars-per-month range, and some starter tiers are free. Costs grow with real
+  usage — which is the good problem.
+- **The two protections that matter:** billing alerts on every paid service from day one, and a
+  hard cap (the framework's defaults: alerts at 50/75/90% of your budget, cap at 2× — a
+  malfunction trips the cap, normal growth trips an alert first). You'll be asked to choose your
+  numbers during setup; you can accept the defaults.
+
+If a bill ever surprises you, that's a framework failure, not a fact of life — say: *"Walk me
+through this month's costs by service and feature, and tell me the biggest saving."*
 
 ## Keeping your AI bill small
 

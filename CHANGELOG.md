@@ -6,6 +6,40 @@ superseded by a new entry.
 
 ---
 
+## v1.4.0 — 2026-07-06
+
+**Source:** founder-approved review of the framework's beginner experience (five gaps identified
+and closed).
+
+### Added
+- `example-project/` — a complete worked example ("The Corner Table," a single-restaurant booking
+  page) with all 14 project docs filled in at teaching scale, annotated with 📝 notes, frozen
+  mid-build (Phase 2 in progress) so living docs are shown in their real state. Demonstrates:
+  feature objectives, an audit-loop conflict caught on paper (capacity race condition), cost
+  controls chosen by the owner, parked product ideas, append-only memory. **Why:** beginners
+  learn what "good" looks like from examples, not rules — empty templates can't teach specificity.
+- `TROUBLESHOOTING.md` — twelve common problems with plain-language fixes and paste-ready recovery
+  prompts, starting with the Windows script-blocking error most first-time users will hit.
+  **Why:** the first failure a beginner meets decides whether they continue.
+- `START-HERE.md` practice-run track — a 30-minute throwaway project (using the framework's
+  existing throwaway exception) so the first taste of the gates happens at zero stakes, plus a
+  pointer to the worked example. **Why:** first contact with the full gate on a real project reads
+  as bureaucracy; at toy scale it reads as machinery.
+- `START-HERE.md` cost-expectations section — honest ballparks for build and running costs and the
+  two protections (alerts + hard cap). **Why:** without an anchor, even a normal first bill is a
+  shock.
+- `GOVERNANCE.md` Section 6 — the monthly compliance spot-check: a standing prompt for a DIFFERENT
+  AI to verify the process was actually followed (sweeps done, audits real, certifications backed
+  by evidence, docs matching history), with builder-side rules for handling findings. **Why:**
+  cross-model audit covered plans; nothing verified the process itself, and a non-technical owner
+  cannot detect quiet drift.
+
+### Changed
+- `README.md` and `CLAUDE.md` Section 5 list the new files; START-HERE error guidance points to
+  TROUBLESHOOTING.md.
+
+---
+
 ## v1.3.0 — 2026-07-06
 
 **Source:** founder decision (moving framework changes to pull-request review on the public repo).
