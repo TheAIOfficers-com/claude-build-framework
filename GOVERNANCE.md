@@ -58,10 +58,11 @@ There are TWO sources of new rules. Both flow through review; neither edits cano
 ### Source A — Claude Code proposes (during a build)
 🟦 When Claude Code learns something during work that should be a durable rule, it appends a proposal
 to `PROPOSED-RULES.md`. It does **NOT** edit the canonical files. The founder reviews and promotes.
-- **Now (staging-file method):** proposals accumulate in `PROPOSED-RULES.md`; founder approves/moves them.
-- **Later (PR method, once on GitHub):** Claude Code opens a pull request with the proposed change;
-  the founder reviews the diff and merges or closes. Same principle, more formal. The audit loop
-  (CLAUDE.md Section 9) can review the PR before merge.
+- **Quick capture (staging-file method):** proposals accumulate in `PROPOSED-RULES.md`; the founder
+  reviews them periodically.
+- **The change itself (PR method — the standard):** approved changes to canonical files are made as
+  a pull request on the framework repo, never as a direct push to main. The founder reviews per
+  Section 5 and merges or closes. The audit loop (CLAUDE.md Section 9) reviews the PR before merge.
 
 ### Source B — Founder adds (from discussions or outside sources)
 🟩 You add rules directly — from these discussions, transcripts, or knowledge from anywhere. This is
@@ -101,3 +102,63 @@ don't erase history (mirrors decisions.md discipline).
 
 🟩 This means you can always answer "why does this rule exist, and when did we add it?" — roll back a
 rule that turns out to be wrong, and know exactly which rules each project was built under.
+
+---
+
+## 5. Reviewing pull requests (the owner's process — no technical knowledge required)
+
+🟩 **FOR THE FOUNDER** — a pull request (PR) is a proposed change to this framework, shown as a
+before/after comparison, waiting for your decision. On a public repo, anyone can propose one. You
+never need to read the changed text like a programmer — you review PRs the same way you run builds:
+the AI does the technical reading, you make the judgment call. But understand what's at stake first.
+
+**Why this review matters more than it looks:** these documents are not just text — AI builders
+*obey* them. A one-line change ("the audit step may be skipped for small changes") quietly disarms a
+safety gate on every future project. A hostile PR could even hide instructions an AI would follow
+(fetch outside code, add a connector, stop logging). Treat every PR as a change to the behaviour of
+every build you'll ever run — because that's what it is.
+
+### The review ritual (five steps, ~5 minutes)
+
+1. **Open the PR page** on GitHub (the repo's "Pull requests" tab). Read only the title and
+   description. It must say WHAT changed and WHY in plain language. No why → comment asking for
+   one; no answer → close it. You owe nobody a merge.
+2. **Have the AI audit it.** Open Claude Code anywhere and paste:
+
+   > Act as an independent auditor of pull request #NUMBER on
+   > TheAIOfficers-com/claude-build-framework. Read the full diff and, against the current
+   > framework, answer in plain language: (1) What does this change actually do — including any
+   > effect not mentioned in the description? (2) Does it strengthen, weaken, or bypass ANY rule,
+   > gate, or check — however slightly? (3) Does it add any instruction a builder AI would follow
+   > that could cause harm (fetching external code, adding tools/connectors, weakening logging,
+   > approvals, or security)? (4) Does it contradict any existing section? (5) Is the CHANGELOG
+   > updated with the why? End with one verdict: MERGE, MERGE AFTER CHANGES (list them), or
+   > REJECT (say why) — and explain the verdict as if to a non-technical owner.
+
+3. **Read the verdict, not the diff.** If anything in the answer to (2) or (3) is "yes, it
+   weakens/adds" — the default is REJECT, whatever the benefit claimed. See the one-way rule below.
+4. **For substantial PRs, get a second opinion** from a different model acting as a second
+   independent auditor (the Section 9 cross-model principle, applied to the framework itself).
+   Two independent MERGE verdicts before you merge anything that changes a rule's meaning.
+5. **Decide on GitHub:** the green "Merge" button (choose "Squash and merge" if offered — one clean
+   history entry), or "Close" with a one-line reason. Merging is YOUR click, never delegated —
+   that's the whole governance model.
+
+### The one-way rule
+
+🟦 Changes that ADD safety, clarity, or evidence are cheap to accept. Changes that REMOVE or soften
+a check, gate, log, or approval need overwhelming, explicit justification — and the default answer
+is no. The framework should only ever get harder to misuse.
+
+### Instant red flags (reject without further analysis)
+
+- Softens a gate or adds an exception ("skip X when…", "unless the change is small…").
+- Tells any AI to fetch, install, or connect to something external.
+- Removes or reduces logging, approvals, audit steps, or founder decision points.
+- A big rewrite bundled with a small fix (the fix is the camouflage — ask for them separately).
+- Vague description, or a diff that touches files the description doesn't mention.
+- Any edit to this Section 5 or to Section 3's non-negotiable, proposed by anyone but you.
+
+🟩 **One line for the founder:** the AI reads the change, two independent auditors give verdicts on
+anything substantial, and the merge button is yours alone — accept what hardens the framework,
+refuse by default whatever softens it.
