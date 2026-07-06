@@ -553,3 +553,81 @@ data — so adding one is a decision you make, not the AI.
 🟩 **One line for the founder:** the AI picks the best tool from the toolbox you approved — it never
 adds new tools to the toolbox on its own.
 
+\---
+
+## 16\. Model roles: thinkers, orchestrators, and typists
+
+🟩 **FOR THE FOUNDER** — AI models come in tiers: the strongest are the best thinkers and the most
+expensive per word; lighter ones are cheaper and faster but shallower. Running everything on the
+strongest model burns money on typing; running everything on a light model produces shallow plans.
+The fix is a division of labour, like a firm: the senior partner designs and signs off, the manager
+runs the day-to-day and delegates, the juniors do the routine work.
+
+🟦 **FOR CLAUDE CODE / THE OPERATOR — the standing role assignment:**
+
+1. **The BEST available model is the Planner, Architect, and Auditor.** It writes/approves the gate
+   docs, designs the architecture, makes non-obvious trade-off decisions, and reviews plans and
+   security-critical work. It acts as **Builder only when the job genuinely needs it**: novel or
+   hard problems, security-sensitive code (auth, payments, data deletion — Layer 7 rule 3),
+   anything a lighter model has already failed at twice.
+2. **The SECOND-BEST available model is the Orchestrator and default Builder.** It runs the
+   day-to-day build and routes each job to the most appropriate model for efficiency:
+   - **routine/mechanical work** (boilerplate, formatting, renames, simple CRUD, doc updates) →
+     delegate DOWN to the lightest adequate model;
+   - **standard implementation** → do it itself;
+   - **planning, architecture, audits, security-critical or twice-failed work** → escalate UP to
+     the best model.
+3. **Escalate on signal, not pride.** Mandatory escalation triggers: two failed attempts at the
+   same problem; any change touching auth/payments/data deletion; any architectural decision not
+   already covered by the approved plan; any audit conflict resolution.
+4. **Audit independence still rules (Section 9).** Whoever built it doesn't audit it — the auditor
+   is a separate instance, preferably a different model family, regardless of tier.
+5. **Log the routing when it matters.** When work is escalated or delegated outside the defaults,
+   note it in `build-log.md` (what, to which tier, why) so cost and quality can be traced.
+6. **Cost ties in.** This is Layer 6 rule 4 and CROSS-03 cost visibility applied to the build
+   itself: the expensive model thinks, the mid model manages and builds, the cheap model types.
+
+🟩 **One line for the founder:** senior partner plans and signs off, the manager runs the build and
+delegates, juniors do the typing — and nobody marks their own homework.
+
+\---
+
+## 17\. Token economy (spend on thinking, never on waste)
+
+🟩 **FOR THE FOUNDER** — everything the AI reads and writes is billed in tokens (roughly, pieces of
+words). Beginners overspend without knowing it: giant rule files loaded every session, the AI
+re-reading the whole codebase for a one-line change, long-winded replies, the most expensive model
+doing routine typing. None of that improves the product — it's pure waste. This framework treats
+token efficiency as a default, not an optimisation you discover after the first bill.
+
+🟦 **FOR CLAUDE CODE — rules to enforce:**
+
+1. **Survey and advise — don't hardcode.** At project setup, and again whenever the available
+   tooling changes, check what token-saving capabilities exist in the environment *at that point in
+   time* — brevity/compression modes for responses, cheaper-model routing, context compaction and
+   clearing, on-demand loading of rules and skills, sub-agents with isolated context, caching.
+   Recommend the most efficient configuration to the founder in plain language: what each option
+   saves, and what (if anything) it trades away. Never name-drop from memory — capabilities change;
+   verify what is actually available in the session before advising.
+2. **Efficient is the default; loosening is the founder's call.** Set up new projects with the most
+   token-efficient configuration available. If the founder prefers fuller replies or a heavier
+   setup, they switch it off knowingly — the one direction that's forbidden is the founder silently
+   paying for waste they never chose.
+3. **Concise output by default.** Lead with the outcome; skip filler and restatement. Full
+   explanations when the founder asks or when a decision needs the reasoning — not on every reply.
+4. **Load on demand.** Always-loaded files stay short pointers (this file's Section 1 targeted
+   reading is that rule). Reference material is read when the task needs it, never pre-loaded "just
+   in case."
+5. **Scope every read.** Read the files the task touches, not the repository. Heavy exploratory
+   reading goes to a sub-agent with its own context that reports back only conclusions.
+6. **Reset between tasks.** Compact or clear the context between unrelated tasks so stale history
+   isn't re-billed on every turn.
+7. **Right-size the model per job** — Section 16's role assignment IS a token rule: the expensive
+   model thinks, the mid model manages and builds, the cheap model types.
+8. **Surface the spend.** If a session's usage is unusually heavy, say so and name the cause
+   (oversized always-loaded files, unscoped reads, wrong model tier) with the fix. Runaway usage is
+   a Gap Report item, same as any other cost leak (Layer 6, CROSS-03).
+
+🟩 **One line for the founder:** ask "are we set up to be token-efficient?" in any session — the AI
+must check what's available right now, recommend the lean setup, and let you decide.
+

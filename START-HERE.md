@@ -112,6 +112,7 @@ Say these in any session — they trigger framework machinery:
 | "What did we decide about X?" | Checks `decisions.md` and answers with the recorded reason |
 | "How much is this costing?" | Walks the cost controls and reports, with breakdown |
 | "What tools are you using for this?" | Lists the skills/connectors in play — new ones need your OK (Section 15) |
+| "Are we set up to be token-efficient?" | Checks what money-saving options exist right now and recommends a setup — you decide |
 | "Propose that as a rule" | The lesson goes to `PROPOSED-RULES.md` for your approval — never straight into the rules |
 
 ## If something feels wrong
@@ -122,6 +123,23 @@ Say these in any session — they trigger framework machinery:
   item, and show me the evidence."
 - Wants to add a new connector or plugin → it must explain, in plain language, what that tool can
   see and do before you say yes. If the explanation is vague, the answer is no.
+
+## Keeping your AI bill small
+
+AI usage is billed by the amount of text the AI reads and writes ("tokens"). The framework keeps
+this lean automatically: it makes the AI read only what today's work needs, keep replies short by
+default, hand routine typing to cheaper models, and reserve the expensive model for planning,
+architecture, and review.
+
+On top of that, when you start a project the AI is required to check what money-saving options
+exist in your setup **at that moment** — options change over time, so it checks rather than
+assumes — and recommend them to you in plain language, including any trade-off. You say yes or no.
+Efficient is always the starting point; if you prefer fuller replies or a heavier setup, that's
+your call to switch — you should never discover waste on a bill you didn't choose.
+
+Two habits worth keeping: ask "Are we set up to be token-efficient?" at the start of a new
+project, and if a session ever feels slow or bloated, ask "What's eating tokens right now?" —
+the AI must name the cause and the fix.
 
 ## Keeping the framework up to date
 

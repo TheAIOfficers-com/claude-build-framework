@@ -7,9 +7,15 @@ Kept short on purpose — these are operating habits, not a manual.
 
 ## Token-saving (lower cost, faster, less context bloat)
 
-1. **Model tiering (mirrors Layer 10).** Use the strongest model for planning/architecture/audit; switch
-   to a lighter model (`/model`) for routine edits, boilerplate, and formatting. Don't run everything on
-   the most expensive model.
+1. **Model roles (CLAUDE.md Section 16).** Best available model = Planner/Architect/Auditor (Builder
+   only when genuinely needed); second-best = Orchestrator and default Builder, routing routine work
+   down to lighter models and escalating hard/security-critical/twice-failed work up. Don't run
+   everything on the most expensive model.
+1b. **Survey and advise (CLAUDE.md Section 17).** At project setup, check what token-saving
+   capabilities actually exist in the environment at that time (brevity modes, model routing,
+   compaction, on-demand loading, sub-agent isolation, caching) and recommend a lean setup to the
+   founder with trade-offs. Availability changes — check, don't recite tool names from memory.
+   Efficient is the default; the founder loosens it knowingly.
 2. **Keep context lean.** Skills load only when needed (that's their point) — don't dump everything into
    `CLAUDE.md`. The global file is a *pointer*, not the whole framework. Let Claude read framework docs
    on demand rather than pre-loading all of them.

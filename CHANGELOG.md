@@ -6,6 +6,32 @@ superseded by a new entry.
 
 ---
 
+## v1.2.0 — 2026-07-06
+
+**Source:** founder decision.
+
+### Added
+- `CLAUDE.md` Section 16 — model roles. The best available model is the Planner, Architect, and
+  Auditor (Builder only when the job genuinely needs it: novel/hard problems, security-critical
+  code, twice-failed work). The second-best model is the Orchestrator and default Builder, routing
+  routine work down to lighter models and escalating on defined triggers. Audit independence
+  (Section 9) still applies at every tier. **Why:** running everything on the strongest model
+  wastes money on typing; running everything on a light model produces shallow plans.
+- `CLAUDE.md` Section 17 — token economy. Key rule: **survey and advise** — at project setup the
+  AI checks which token-saving capabilities exist in the environment at that point in time and
+  recommends a lean configuration with trade-offs; the founder decides. Efficient is the default;
+  loosening it is the founder's prerogative. Plus standing habits: concise output, on-demand
+  loading, scoped reads, context resets between tasks, model right-sizing, and surfacing unusual
+  spend as a Gap Report item. Deliberately names no specific tools — availability changes, so the
+  rule is to check at the time, not recite from memory. **Why:** newcomers overspend silently;
+  efficiency must be the starting point, not a lesson from the first bill.
+- `START-HERE.md` — "Keeping your AI bill small" section in plain language, plus the
+  "Are we set up to be token-efficient?" steering phrase.
+- `claude-integration/claude-best-practices.md` — token-saving items updated to reference
+  Sections 16 and 17.
+
+---
+
 ## v1.1.0 — 2026-07-06
 
 **Source:** founder-approved framework review, July 2026.
