@@ -131,6 +131,9 @@ and what to find a transcript or make a decision about next.
 
 * `CLAUDE.md` — this master file.
 * `START-HERE.md` — plain-English quick start for the non-technical owner (start a project in 3 steps).
+* `TROUBLESHOOTING.md` — plain-language fixes for common problems (first-run failures onward).
+* `example-project/` — a complete worked example of the project docs, filled in and annotated;
+builders should match its level of specificity when drafting gate docs.
 * `CHANGELOG.md` — what changed in the framework, when, and why (see GOVERNANCE.md Section 4).
 * `scripts/` — automation: `new-project.ps1` / `new-project.sh` create a fully wired new project.
 * `SETUP.md` — how to activate the GitHub repo + Claude Code, and bring in freelancers (start here to stand it up).

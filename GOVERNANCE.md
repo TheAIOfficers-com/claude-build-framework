@@ -162,3 +162,33 @@ is no. The framework should only ever get harder to misuse.
 🟩 **One line for the founder:** the AI reads the change, two independent auditors give verdicts on
 anything substantial, and the merge button is yours alone — accept what hardens the framework,
 refuse by default whatever softens it.
+
+---
+
+## 6. The monthly compliance spot-check (who watches the process?)
+
+🟩 **FOR THE FOUNDER** — everything above assumes the builder AI actually follows the framework:
+really sweeping before planning, really running the audit, really certifying honestly. Usually it
+does. But drift is quiet, and you can't read code to catch it. So once a month (or at any phase
+boundary), you run a spot-check — performed by a DIFFERENT AI than the one building, so the process
+is never grading its own homework.
+
+**Paste this to a model that is not your builder:**
+
+> Act as a compliance auditor for the project at [project folder / repo]. Check the project's
+> documents and version history against the build framework it references, and answer in plain
+> language: (1) Is there evidence each implemented feature followed SWEEP → MOCKUP → PLAN → AUDIT →
+> IMPLEMENT — or do docs show steps skipped? (2) Do todo.md, techdebt.md, build-log.md, and
+> decisions.md reflect the actual history, or are there silent gaps between what the code/commits
+> show and what the docs say? (3) Were Definition-of-Done certifications backed by evidence?
+> (4) Is anything marked resolved in techdebt.md that doesn't appear actually fixed? List every
+> discrepancy with where you found it, rate overall process compliance 1–10, and name the single
+> most important correction.
+
+🟦 **FOR CLAUDE CODE** — when a spot-check finds discrepancies: fix the documents to match reality
+first (staleness rule, Section 10 of CLAUDE.md), log each discrepancy in `techdebt.md`, and if the
+same class of drift recurs, propose a durable prevention via `PROPOSED-RULES.md`. A builder must
+never dispute a spot-check by editing history — append-only docs stay append-only.
+
+🟩 **One line for the founder:** trust, but verify monthly — with a different AI holding the
+checklist.

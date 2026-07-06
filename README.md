@@ -24,6 +24,8 @@ steps, with zero jargon. If you can unzip a file and paste a prompt, you can use
 | [reference-architectures/](reference-architectures/) | Ready-made blueprints for specific capabilities (voice, agents, help desk) |
 | [project-docs-template/](project-docs-template/) | The planning and memory documents every project carries |
 | [claude-integration/](claude-integration/) | Ready-made Claude Code wiring — sub-agents, slash commands, safety hooks |
+| [example-project/](example-project/) | A complete worked example — every planning document filled in and annotated |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Plain-language fixes for the most common problems, first-run onward |
 | [scripts/](scripts/) | One-command project creation (Windows and Mac/Linux) |
 | [DEFINITION-OF-DONE.md](DEFINITION-OF-DONE.md) | The acceptance checklist — nothing is "done" until it passes |
 | [GOVERNANCE.md](GOVERNANCE.md) | How the rules change (only with the owner's approval) and how versions work |
