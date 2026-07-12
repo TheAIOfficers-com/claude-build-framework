@@ -5,6 +5,13 @@ and how projects pin/upgrade. Newest entries first. Entries are never deleted; r
 superseded by a new entry.
 
 ---
+## v1.5.0 — 2026-07-12
+
+- Added standing_instructions.md — model operating principles (Tier 0 core + Tier 1 full doctrine, with precedence clause pointing to this repo as canonical).
+- Added standing_core.md — paste-ready Tier 0 for Claude.ai projects and Cowork spaces.
+- Added deployment_guide.md — where and how to deploy both files across environments.
+
+
 
 ## v1.4.0 — 2026-07-06
 
