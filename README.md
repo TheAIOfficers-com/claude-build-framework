@@ -30,7 +30,7 @@ steps, with zero jargon. If you can unzip a file and paste a prompt, you can use
 | [DEFINITION-OF-DONE.md](DEFINITION-OF-DONE.md) | The acceptance checklist — nothing is "done" until it passes |
 | [GOVERNANCE.md](GOVERNANCE.md) | How the rules change (only with the owner's approval) and how versions work |
 | [CHANGELOG.md](CHANGELOG.md) | Every change to the framework, with the reason |
-| [standing_instructions.md](standing_instructions.md) | Instructions for models |
+| [standing_instructions.md](standing_instructions.md) | Model Operating Principles for Builder models |
 
 
 ## The workflow in one line
