@@ -146,6 +146,8 @@ builders should match its level of specificity when drafting gate docs.
 * `CONTRIBUTOR-GOVERNANCE.md` — access, IP, confidentiality, handoff rules for non-owner builders.
 * `GOVERNANCE.md` — where the framework lives, how it's used each session, and how rules change.
 * `PROPOSED-RULES.md` — staging queue where Claude Code proposes rule changes for founder review.
+* `MODEL-CHECK.md` — the four-question model check: the founder confirms which model builds,
+advises, plans/audits and searches (Sections 16, 17).
 * `GLOBAL-AUDIT-LESSONS.md` — project-agnostic mistakes found by audits; read before every build,
 checked by every audit (Sections 1, 9, 17).
 * `STACK.md` — the chosen tech stack per project (filled in as we build).
@@ -603,7 +605,8 @@ runs the day-to-day and delegates, the juniors do the routine work.
    a cheaper default builder with a stronger model on call as advisor (where the tooling offers an
    advisor feature), recorded in the project's settings and CLAUDE.md. Planning and audits stay
    with the best model; when it is out of credits, a fresh agent on the next-best model audits.
-   The override is the founder's choice, never set silently (Section 17 rule 2).
+   The override is the founder's choice, never set silently (Section 17 rule 2): it is chosen
+   through the model check (`MODEL-CHECK.md`, Section 17 rule 11).
 
 🟩 **One line for the founder:** senior partner plans and signs off, the manager runs the build and
 delegates, juniors do the typing — and nobody marks their own homework.
@@ -651,6 +654,10 @@ token efficiency as a default, not an optimisation you discover after the first 
 10. **Use a code-graph index when one exists.** If the repo is indexed by a code-graph tool in the
     session, use it to find code, callers and change impact instead of reading files — then read
     the actual file before stating facts or editing (an index is a snapshot and can be stale).
+11. **Models are confirmed by the founder, never assumed.** Model routing for a project (builder,
+    advisor, planner/auditor, search) is set only through the model check in `MODEL-CHECK.md`:
+    verify today's models, recommend by rank with plain-language trade-offs, record the founder's
+    answers with the date. Rerun it at setup, when models change, when limits bite, or on request.
 
 🟩 **One line for the founder:** ask "are we set up to be token-efficient?" in any session — the AI
 must check what's available right now, recommend the lean setup, and let you decide.
