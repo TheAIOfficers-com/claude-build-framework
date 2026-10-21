@@ -33,6 +33,8 @@ instead of silently proceeding.
 2. Read `STACK.md` to see what tech stack has been chosen for this project (may be empty early on).
 3. **Read the project's planning/memory docs (see Section 8) to reload live project memory** —
 especially `todo.md` (what's built / what's next) and `techdebt.md` (open issues to resolve).
+   **Then read `GLOBAL-AUDIT-LESSONS.md` and the project's `<PROJECT>_Audit_Lessons.md` (if present)**
+   and state which lessons apply to today's work — mistakes already paid for are not repeated.
 4. **Declare which of the 13 layers today's work touches** (a feature touching the API, database, and
 auth touches Layers 2, 3, 4 — plus Layer 8 if it handles sensitive data). Then read ONLY:
    - the `layers/LAYER-XX-\*.md` docs for the declared layers (must be **ACTIVE**),
@@ -47,6 +49,8 @@ never implement a plan that hasn't passed the independent audit loop.**
 6. At the end of a work session, **update `todo.md`, `techdebt.md`, and the append-only docs**; if a
 durable rule-worthy lesson emerged, **append it to `PROPOSED-RULES.md` (never edit canonical files
 directly — see GOVERNANCE.md)**; then report any layer whose aim is **not yet met** (the gap list).
+Repeatable mistakes an audit found go to the project's `<PROJECT>_Audit_Lessons.md`; project-agnostic
+ones are tagged `[GLOBAL?]` and proposed in `PROPOSED-RULES.md` for `GLOBAL-AUDIT-LESSONS.md`.
 
 🟩 **FOR THE FOUNDER** — this guarantees that every time you open a new session, Claude Code
 re-grounds itself in your standards AND your project's current state — instead of starting fresh and
@@ -142,6 +146,8 @@ builders should match its level of specificity when drafting gate docs.
 * `CONTRIBUTOR-GOVERNANCE.md` — access, IP, confidentiality, handoff rules for non-owner builders.
 * `GOVERNANCE.md` — where the framework lives, how it's used each session, and how rules change.
 * `PROPOSED-RULES.md` — staging queue where Claude Code proposes rule changes for founder review.
+* `GLOBAL-AUDIT-LESSONS.md` — project-agnostic mistakes found by audits; read before every build,
+checked by every audit (Sections 1, 9, 17).
 * `STACK.md` — the chosen tech stack per project (filled in as we build).
 * `layers/LAYER-01-frontend.md` … `LAYER-13-availability.md` — one doc per layer.
 * `cross-cutting/CROSS-XX-\*.md` — concerns that span many layers rather than building one part
@@ -294,6 +300,10 @@ same agent that wrote it. The auditor checks for:
 * Unverified assumptions about existing modules.
 * Gaps, missing edge cases, security/scaling/cost implications (cross-check the relevant layers).
 * Consistency with the project docs (PRD/TRD/appflow/design/schema/implementation).
+* Every live lesson in `GLOBAL-AUDIT-LESSONS.md` and the project's `<PROJECT>_Audit_Lessons.md`.
+  The final auditor of each audit round appends any new repeatable mistake to the project lessons
+  file (re-read it just before writing; parallel reviewers report to that auditor, they don't write)
+  and tags project-agnostic ones `[GLOBAL?]`.
 **Record every conflict or issue the auditor raises in `techdebt.md`** (with the plan it relates to),
 even if it is resolved immediately — this preserves the decision trail.
 
@@ -589,6 +599,11 @@ runs the day-to-day and delegates, the juniors do the routine work.
    note it in `build-log.md` (what, to which tier, why) so cost and quality can be traced.
 6. **Cost ties in.** This is Layer 6 rule 4 and CROSS-03 cost visibility applied to the build
    itself: the expensive model thinks, the mid model manages and builds, the cheap model types.
+7. **Founder cost override (optional, per project).** When usage limits bite, the founder may set
+   a cheaper default builder with a stronger model on call as advisor (where the tooling offers an
+   advisor feature), recorded in the project's settings and CLAUDE.md. Planning and audits stay
+   with the best model; when it is out of credits, a fresh agent on the next-best model audits.
+   The override is the founder's choice, never set silently (Section 17 rule 2).
 
 🟩 **One line for the founder:** senior partner plans and signs off, the manager runs the build and
 delegates, juniors do the typing — and nobody marks their own homework.
@@ -630,6 +645,12 @@ token efficiency as a default, not an optimisation you discover after the first 
 8. **Surface the spend.** If a session's usage is unusually heavy, say so and name the cause
    (oversized always-loaded files, unscoped reads, wrong model tier) with the fix. Runaway usage is
    a Gap Report item, same as any other cost leak (Layer 6, CROSS-03).
+9. **Learn once.** Repeat audit findings are the costliest waste: every repeat is another audit
+   round. Read `GLOBAL-AUDIT-LESSONS.md` and the project lessons file before building (Section 1);
+   when a lesson reaches 3+ hits, propose a script check so no model has to remember it.
+10. **Use a code-graph index when one exists.** If the repo is indexed by a code-graph tool in the
+    session, use it to find code, callers and change impact instead of reading files — then read
+    the actual file before stating facts or editing (an index is a snapshot and can be stale).
 
 🟩 **One line for the founder:** ask "are we set up to be token-efficient?" in any session — the AI
 must check what's available right now, recommend the lean setup, and let you decide.

@@ -77,6 +77,11 @@ and `my-project-name` with your project's name (letters, numbers, and dashes onl
 bash /path/to/claude-build-framework/scripts/new-project.sh my-project-name
 ```
 
+Optional, if you want a cheaper model to build with a stronger one on call as advisor (CLAUDE.md
+Section 16 rule 7): add `-BuildModel sonnet -AdvisorModel opus` (Windows) or
+`<destination-folder> sonnet opus` (Mac / Linux). Every new project also gets its own
+`<name>_Audit_Lessons.md` — see `GLOBAL-AUDIT-LESSONS.md`.
+
 The command does everything technical for you: creates the project folder, copies in the planning
 documents (empty, ready to fill), writes the project's rule file so every AI session automatically
 follows this framework, records which framework version the project uses, and starts version history.

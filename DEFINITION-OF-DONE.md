@@ -30,6 +30,8 @@ log it in `techdebt.md`; do not tick a box that isn't true.
 - [ ] Built on the owner's GitHub repo (mandatory)
 - [ ] Workflow followed: sweep → mockup → plan → audit → implement (Section 9)
 - [ ] Plan was audited by an independent reviewer before implementation; conflicts logged to techdebt
+- [ ] Change checked against every live lesson in `GLOBAL-AUDIT-LESSONS.md` and the project's
+      `<PROJECT>_Audit_Lessons.md` (create it if missing); new repeatable mistakes appended (project-agnostic ones proposed)
 
 ### B. The 13 layers (only those the feature touches)
 - [ ] Each ACTIVE layer the feature touches has its aim met (or gaps logged in techdebt with reason)
