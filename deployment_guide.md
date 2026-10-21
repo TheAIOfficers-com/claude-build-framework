@@ -23,9 +23,9 @@
 
 ## STEP 2 — Claude Code (all coding projects) — true auto mode
 
-1. Open your global memory file: `C:\Users\rizwa\.claude\CLAUDE.md`
+1. Open your global memory file: `<your-user-folder>\.claude\CLAUDE.md`
 2. Save a local copy of `standing_instructions.md` somewhere stable, e.g.:
-   `C:\Users\rizwa\.claude\standing_instructions.md`
+   `<your-user-folder>\.claude\standing_instructions.md`
 3. Add this line near the top of the global CLAUDE.md:
    ```
    @standing_instructions.md

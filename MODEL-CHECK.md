@@ -38,7 +38,8 @@ plain language: cost, quality, and the risk of running out of credits.
 
 1. If the builder or advisor answer differs from what is set, write it to `.claude/settings.json`
    in the project. Use the tool's settings keys for the main model and the advisor, and verify the
-   key names in the tool's current docs. Merge them into any existing settings; never overwrite
+   key names in the tool's current docs (Claude Code, checked 2026-10-21: `model` and `advisorModel`,
+   https://code.claude.com/docs/en/advisor). Merge them into any existing settings; never overwrite
    other keys. The planner/auditor (Q3) and search (Q4) answers can't be enforced by settings; they
    live only in `CLAUDE.md` and are followed by the session.
 2. In the project `CLAUDE.md`, replace any existing `## Model routing…` section (whatever its
