@@ -56,8 +56,9 @@ The aim is met only when ALL of the following hold (apply the ones relevant to t
    for simple tasks. Running every prompt through one expensive model is a billing problem, not a
    strategy. Implement tiering as follows:
    - **8a. Complexity classifier** — score each incoming request on token count, task type, and
-     reasoning depth. Simple → lightweight model (Haiku class). Moderate → mid-tier (Sonnet class).
-     Complex multi-step reasoning → heavy model (Opus class). This can be ~10 lines of code.
+     reasoning depth. Simple → the provider's lightest tier. Moderate → its mid tier. Complex
+     multi-step reasoning → its heaviest tier (names change: keep the tier→model mapping in config). This can be ~10
+     lines.
    - **8b. Route at the gateway layer** — the app sends every request to ONE endpoint; the gateway
      scores complexity and picks the model automatically. The user never knows which model answered.
    - **8c. Measure quality per tier weekly** — run an evaluation suite against each tier on a
