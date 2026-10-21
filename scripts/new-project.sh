@@ -1,17 +1,30 @@
 #!/usr/bin/env bash
 # new-project.sh — create a new project wired to the TheAIOfficers build framework.
-# Usage:  bash <framework>/scripts/new-project.sh my-project [/path/to/projects]
-# Creates <path>/<name> with project-docs/, a framework-wired CLAUDE.md, a version pin, and git history.
+# Usage:  bash <framework>/scripts/new-project.sh my-project [/path/to/projects] [build-model] [advisor-model]
+# Creates <path>/<name> with project-docs/, a framework-wired CLAUDE.md, an audit-lessons file,
+# a version pin, and git history. build-model/advisor-model (optional, founder's choice — CLAUDE.md
+# Section 16 rule 7) write .claude/settings.json; omit them to keep the default model routing.
 
 set -euo pipefail
 
 NAME="${1:-}"
 DEST="${2:-$(pwd)}"
+BUILD_MODEL="${3:-}"
+ADVISOR_MODEL="${4:-}"
 
 if [ -z "$NAME" ]; then
-  echo "ERROR: usage: new-project.sh <project-name> [destination-folder]" >&2
+  echo "ERROR: usage: new-project.sh <project-name> [destination-folder] [build-model] [advisor-model]" >&2
+  echo "       (advisor only: new-project.sh <name> <folder> \"\" <advisor-model>)" >&2
   exit 1
 fi
+
+# --- validate optional model names before anything is created ---
+for m in "$BUILD_MODEL" "$ADVISOR_MODEL"; do
+  if [ -n "$m" ] && ! printf '%s' "$m" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+    echo "ERROR: model name '$m' may only contain letters, digits, '.', '_' or '-'." >&2
+    exit 1
+  fi
+done
 
 # --- locate the framework (this script lives in <framework>/scripts/) ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -49,6 +62,7 @@ if [ -f "$PROJECT_DIR/project-docs/TRD.md" ]; then
 fi
 
 # --- write the project-level CLAUDE.md ---
+LESSONS_FILE="${NAME}_Audit_Lessons.md"
 cat > "$PROJECT_DIR/CLAUDE.md" <<EOF
 # CLAUDE.md — $NAME (project rules)
 
@@ -63,6 +77,8 @@ cat > "$PROJECT_DIR/CLAUDE.md" <<EOF
 - Planning/memory documents live in \`project-docs/\` — the pre-coding gate applies: no application
   code until the six gate docs are complete and mockups are approved.
 - Never edit the canonical framework files; propose changes via the framework's \`PROPOSED-RULES.md\`.
+- Before building, read the framework's \`GLOBAL-AUDIT-LESSONS.md\` and this project's
+  \`$LESSONS_FILE\`; the auditor checks every lesson and appends new repeatable mistakes.
 
 ## Operating rules (apply regardless of model)
 
@@ -90,6 +106,37 @@ cat > "$PROJECT_DIR/CLAUDE.md" <<EOF
 (Add project-only rules and context below this line. Standards live in the framework, not here.)
 EOF
 
+# --- write the project audit-lessons file (GLOBAL-AUDIT-LESSONS.md explains the system) ---
+cat > "$PROJECT_DIR/$LESSONS_FILE" <<EOF
+# $NAME — Audit Lessons (read before every build; the auditor checks each line)
+Append-only. One line per lesson. Never delete; mark RETIRED. Keep it short (~60 live lines).
+Hit = one separate audit round where the mistake was found. Tag project-agnostic lessons [GLOBAL?]
+and propose them in the framework's PROPOSED-RULES.md.
+
+| # | Lesson | Check | Sev | Hits | Source |
+|---|--------|-------|-----|------|--------|
+EOF
+
+# --- optional model routing (founder's cost override, CLAUDE.md Section 16 rule 7) ---
+SETTINGS_WRITTEN="no"
+if [ -n "$BUILD_MODEL" ] || [ -n "$ADVISOR_MODEL" ]; then
+  mkdir -p "$PROJECT_DIR/.claude"
+  {
+    echo "{"
+    if [ -n "$BUILD_MODEL" ] && [ -n "$ADVISOR_MODEL" ]; then
+      printf '  "model": "%s",\n  "advisorModel": "%s"\n' "$BUILD_MODEL" "$ADVISOR_MODEL"
+    elif [ -n "$BUILD_MODEL" ]; then
+      printf '  "model": "%s"\n' "$BUILD_MODEL"
+    else
+      printf '  "advisorModel": "%s"\n' "$ADVISOR_MODEL"
+    fi
+    echo "}"
+  } > "$PROJECT_DIR/.claude/settings.json"
+  printf '\n## Model routing (founder'"'"'s cost override — framework CLAUDE.md Section 16 rule 7)\n\n- Build: %s · Advisor: %s (set in `.claude/settings.json`). Planning and audits stay with the best model.\n' \
+    "${BUILD_MODEL:-default}" "${ADVISOR_MODEL:-none}" >> "$PROJECT_DIR/CLAUDE.md"
+  SETTINGS_WRITTEN="yes"
+fi
+
 # --- start git history ---
 GIT_DONE="no"
 if command -v git >/dev/null 2>&1; then
@@ -111,6 +158,8 @@ echo "DONE — project created."
 echo "  Folder:            $PROJECT_DIR"
 echo "  Framework version: $VERSION (pinned in project-docs/TRD.md)"
 echo "  Planning docs:     $PROJECT_DIR/project-docs/"
+echo "  Audit lessons:     $PROJECT_DIR/$LESSONS_FILE"
+[ "$SETTINGS_WRITTEN" = "yes" ] && echo "  Model routing:     .claude/settings.json (build: ${BUILD_MODEL:-default}, advisor: ${ADVISOR_MODEL:-none})"
 [ "$GIT_DONE" = "yes" ] && echo "  Git:               initialised with first commit"
 echo ""
 echo "NEXT STEP: open Claude Code inside this folder and paste the kickoff prompt from START-HERE.md (Step 2)."

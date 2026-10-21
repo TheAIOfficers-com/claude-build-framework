@@ -5,6 +5,25 @@ and how projects pin/upgrade. Newest entries first. Entries are never deleted; r
 superseded by a new entry.
 
 ---
+## v1.6.0 — 2026-10-21
+
+**Source:** founder request (a client dashboard build, 21 Oct 2026) — weekly token limits were pausing
+builds and the same mistakes kept recurring across audits.
+
+- Added `GLOBAL-AUDIT-LESSONS.md` — project-agnostic mistakes found by audits, seeded with 11 lessons
+  from that build (no client names or data). Read before every build; checked by every audit.
+- CLAUDE.md Section 1: read global + project audit lessons at session start; route new lessons at session end.
+- CLAUDE.md Section 5: file list entry. Section 9 Step 4: the auditor checks every live lesson and appends new ones.
+- CLAUDE.md Section 16 rule 7: optional founder cost override (cheaper builder + stronger advisor).
+- CLAUDE.md Section 17 rules 9–10: learn once (lessons → script checks at 3+ hits); use a code-graph
+  index when one exists, then read the real file.
+- DEFINITION-OF-DONE.md A: lessons checkbox.
+- `scripts/new-project.ps1` / `.sh`: create `<Name>_Audit_Lessons.md`; optional build/advisor model
+  arguments write `.claude/settings.json` and a model-routing note in the project CLAUDE.md.
+- README, START-HERE: new file and the optional model arguments.
+- Why MINOR (GOVERNANCE.md Section 4): no rule removed or reversed and no new gate — the lessons
+  check runs inside the existing audit step (Section 9 Step 4); the cost override is optional.
+
 ## v1.5.0 — 2026-07-12
 
 - Added standing_instructions.md — model operating principles (Tier 0 core + Tier 1 full doctrine, with precedence clause pointing to this repo as canonical).

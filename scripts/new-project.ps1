@@ -1,15 +1,29 @@
 # new-project.ps1 — create a new project wired to the TheAIOfficers build framework.
-# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"]
-# Creates <Path>\<Name> with project-docs/, a framework-wired CLAUDE.md, a version pin, and git history.
+# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"] [-BuildModel sonnet -AdvisorModel opus]
+# Creates <Path>\<Name> with project-docs/, a framework-wired CLAUDE.md, an audit-lessons file,
+# a version pin, and git history. -BuildModel/-AdvisorModel (optional, founder's choice — CLAUDE.md
+# Section 16 rule 7) write .claude/settings.json; omit them to keep the default model routing.
 
 param(
     [Parameter(Mandatory = $true)]
     [string]$Name,
 
-    [string]$Path = (Get-Location).Path
+    [string]$Path = (Get-Location).Path,
+
+    [string]$BuildModel = '',
+
+    [string]$AdvisorModel = ''
 )
 
 $ErrorActionPreference = 'Stop'
+
+# --- validate optional model names before anything is created ---
+foreach ($m in @($BuildModel, $AdvisorModel)) {
+    if ($m -and $m -notmatch '^[A-Za-z0-9._-]+$') {
+        Write-Host "ERROR: model name '$m' may only contain letters, digits, '.', '_' or '-'." -ForegroundColor Red
+        exit 1
+    }
+}
 
 # --- locate the framework (this script lives in <framework>/scripts/) ---
 $FrameworkRoot = Split-Path -Parent $PSScriptRoot
@@ -44,6 +58,7 @@ if (Test-Path $TrdPath) {
 }
 
 # --- write the project-level CLAUDE.md ---
+$LessonsFile = "$($Name)_Audit_Lessons.md"
 $ProjectClaudeMd = @"
 # CLAUDE.md — $Name (project rules)
 
@@ -58,6 +73,8 @@ $ProjectClaudeMd = @"
 - Planning/memory documents live in ``project-docs/`` — the pre-coding gate applies: no application
   code until the six gate docs are complete and mockups are approved.
 - Never edit the canonical framework files; propose changes via the framework's ``PROPOSED-RULES.md``.
+- Before building, read the framework's ``GLOBAL-AUDIT-LESSONS.md`` and this project's
+  ``$LessonsFile``; the auditor checks every lesson and appends new repeatable mistakes.
 
 ## Operating rules (apply regardless of model)
 
@@ -86,6 +103,33 @@ $ProjectClaudeMd = @"
 "@
 Set-Content -Path (Join-Path $ProjectDir 'CLAUDE.md') -Value $ProjectClaudeMd -Encoding utf8
 
+# --- write the project audit-lessons file (GLOBAL-AUDIT-LESSONS.md explains the system) ---
+$LessonsMd = @"
+# $Name — Audit Lessons (read before every build; the auditor checks each line)
+Append-only. One line per lesson. Never delete; mark RETIRED. Keep it short (~60 live lines).
+Hit = one separate audit round where the mistake was found. Tag project-agnostic lessons [GLOBAL?]
+and propose them in the framework's PROPOSED-RULES.md.
+
+| # | Lesson | Check | Sev | Hits | Source |
+|---|--------|-------|-----|------|--------|
+"@
+Set-Content -Path (Join-Path $ProjectDir $LessonsFile) -Value $LessonsMd -Encoding utf8
+
+# --- optional model routing (founder's cost override, CLAUDE.md Section 16 rule 7) ---
+$SettingsWritten = $false
+if ($BuildModel -or $AdvisorModel) {
+    $Settings = [ordered]@{}
+    if ($BuildModel)   { $Settings['model'] = $BuildModel }
+    if ($AdvisorModel) { $Settings['advisorModel'] = $AdvisorModel }
+    New-Item -ItemType Directory -Path (Join-Path $ProjectDir '.claude') | Out-Null
+    # UTF-8 without BOM, so strict JSON readers accept it on Windows PowerShell 5.1 too
+    [IO.File]::WriteAllText((Join-Path $ProjectDir '.claude\settings.json'), ($Settings | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+    $BuildLabel = if ($BuildModel) { $BuildModel } else { 'default' }
+    $AdvisorLabel = if ($AdvisorModel) { $AdvisorModel } else { 'none' }
+    Add-Content -Path (Join-Path $ProjectDir 'CLAUDE.md') -Value "`n## Model routing (founder's cost override — framework CLAUDE.md Section 16 rule 7)`n`n- Build: $BuildLabel · Advisor: $AdvisorLabel (set in ``.claude/settings.json``). Planning and audits stay with the best model.`n" -Encoding utf8
+    $SettingsWritten = $true
+}
+
 # --- start git history ---
 $GitAvailable = $null -ne (Get-Command git -ErrorAction SilentlyContinue)
 if ($GitAvailable) {
@@ -108,6 +152,8 @@ Write-Host "DONE — project created." -ForegroundColor Green
 Write-Host "  Folder:            $ProjectDir"
 Write-Host "  Framework version: $Version (pinned in project-docs\TRD.md)"
 Write-Host "  Planning docs:     $ProjectDir\project-docs\"
+Write-Host "  Audit lessons:     $ProjectDir\$LessonsFile"
+if ($SettingsWritten) { Write-Host "  Model routing:     .claude\settings.json (build: $BuildLabel, advisor: $AdvisorLabel)" }
 if ($GitAvailable) { Write-Host "  Git:               initialised with first commit" }
 Write-Host ""
 Write-Host "NEXT STEP: open Claude Code inside this folder and paste the kickoff prompt from START-HERE.md (Step 2)." -ForegroundColor Cyan
