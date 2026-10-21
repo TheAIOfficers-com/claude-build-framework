@@ -168,7 +168,7 @@ Product development is never one task. Break it down before touching code:
 ### Orchestration rules (matching model to chunk)
 1. **Planning, architecture, ambiguity resolution, and review → strongest available model.** These are where judgment concentrates.
 2. **Well-specified, mechanical execution (boilerplate, migrations from a template, renames, formatting, single-file edits with clear specs) → cheaper/faster model.**
-3. **Research and reconnaissance → cheap model for gathering, strong model for synthesis.** (Proven pattern: Haiku for recon, Sonnet for classification, Opus for orchestration.)
+3. **Research and reconnaissance → cheap model for gathering, strong model for synthesis.** (Proven pattern: lightest model for recon, mid tier for classification, strongest for orchestration — confirm today's names with the framework's model check, MODEL-CHECK.md.)
 4. **Verification is a separate chunk with a separate pair of eyes.** Ideally the reviewing model is not the one that wrote the code; at minimum it is a fresh session without the writer's assumptions in context.
 5. **The orchestrator never executes and evaluates its own work in the same breath.** Write → hand off → verify is the loop.
 

@@ -5,6 +5,14 @@ and how projects pin/upgrade. Newest entries first. Entries are never deleted; r
 superseded by a new entry.
 
 ---
+## v1.7.2 — 2026-10-21
+
+**Source:** best-model audit note (v1.7.1) — fixed model names remained in two canonical files.
+
+- layers/LAYER-10-caching.md rule 8a: model tiers by rank (lightest / mid / heaviest) instead of model names; tier→model mapping kept in config.
+- standing_instructions.md orchestration rule 3: the proven pattern is stated by rank, with names confirmed via MODEL-CHECK.md.
+- Why PATCH: wording only; no rule added, removed or changed in meaning.
+
 ## v1.7.1 — 2026-10-21
 
 **Source:** post-merge audit of v1.6.0 + v1.7.0 by the best model (the earlier audits ran on the fallback model while the best was out of credits).
