@@ -1,5 +1,5 @@
 # new-project.ps1 — create a new project wired to the TheAIOfficers build framework.
-# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"] [-BuildModel <model> -AdvisorModel <model>]   (e.g. sonnet / opus — example names; run MODEL-CHECK.md)
+# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"] [-BuildModel <build-model> -AdvisorModel <advisor-model>]   (see MODEL-CHECK.md)
 # Creates <Path>\<Name> with project-docs/, a framework-wired CLAUDE.md, an audit-lessons file,
 # a version pin, and git history. -BuildModel/-AdvisorModel (optional, founder's choice — CLAUDE.md
 # Section 16 rule 7) write .claude/settings.json; omit them to keep the default model routing.
@@ -17,7 +17,11 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# --- validate optional model names before anything is created ---
+# --- validate the project name and optional model names before anything is created ---
+if ($Name -notmatch '^[A-Za-z0-9-]+$') {
+    Write-Host "ERROR: project name '$Name' may only contain letters, numbers and dashes." -ForegroundColor Red
+    exit 1
+}
 foreach ($m in @($BuildModel, $AdvisorModel)) {
     if ($m -and $m -notmatch '^[A-Za-z0-9._-]+$') {
         Write-Host "ERROR: model name '$m' may only contain letters, digits, '.', '_' or '-'." -ForegroundColor Red
@@ -118,7 +122,7 @@ Set-Content -Path (Join-Path $ProjectDir $LessonsFile) -Value $LessonsMd -Encodi
 # --- optional model routing (founder's cost override, CLAUDE.md Section 16 rule 7) ---
 $SettingsWritten = $false
 if ($BuildModel -or $AdvisorModel) {
-    # Settings keys 'model' / 'advisorModel' checked against Claude Code docs 2026-10-21; re-verify per MODEL-CHECK.md.
+    # Settings key names: single source is MODEL-CHECK.md Step 3.1 — update both together.
     $Settings = [ordered]@{}
     if ($BuildModel)   { $Settings['model'] = $BuildModel }
     if ($AdvisorModel) { $Settings['advisorModel'] = $AdvisorModel }

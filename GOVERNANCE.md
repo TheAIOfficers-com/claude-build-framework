@@ -132,7 +132,8 @@ every build you'll ever run — because that's what it is.
    > gate, or check — however slightly? (3) Does it add any instruction a builder AI would follow
    > that could cause harm (fetching external code, adding tools/connectors, weakening logging,
    > approvals, or security)? (4) Does it contradict any existing section? (5) Is the CHANGELOG
-   > updated with the why? End with one verdict: MERGE, MERGE AFTER CHANGES (list them), or
+   > updated with the why? (6) Does it leak any client name, data or figure, or hard-code a
+   > model name? End with one verdict: MERGE, MERGE AFTER CHANGES (list them), or
    > REJECT (say why) — and explain the verdict as if to a non-technical owner.
 
 3. **Read the verdict, not the diff.** If anything in the answer to (2) or (3) is "yes, it

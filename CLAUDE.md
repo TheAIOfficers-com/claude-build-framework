@@ -658,6 +658,8 @@ token efficiency as a default, not an optimisation you discover after the first 
     advisor, planner/auditor, search) is set only through the model check in `MODEL-CHECK.md`:
     verify today's models, recommend by rank with plain-language trade-offs, record the founder's
     answers with the date. Rerun it at setup, when models change, when limits bite, or on request.
+    Exception: the `new-project` setup arguments write a provisional setting; the first-session
+    model check confirms or replaces it.
 
 🟩 **One line for the founder:** ask "are we set up to be token-efficient?" in any session — the AI
 must check what's available right now, recommend the lean setup, and let you decide.

@@ -78,8 +78,8 @@ bash /path/to/claude-build-framework/scripts/new-project.sh my-project-name
 ```
 
 Optional, if you want a cheaper model to build with a stronger one on call as advisor (CLAUDE.md
-Section 16 rule 7): add `-BuildModel sonnet -AdvisorModel opus` (Windows) or
-`<destination-folder> sonnet opus` (Mac / Linux) — example names only; the model check below
+Section 16 rule 7): add `-BuildModel <build-model> -AdvisorModel <advisor-model>` (Windows) or
+`<destination-folder> <build-model> <advisor-model>` (Mac / Linux); the model check below
 tells you which models exist today. Every new project also gets its own
 `<name>_Audit_Lessons.md` — see `GLOBAL-AUDIT-LESSONS.md`. Either way, in the first session say
 **"check my models"**: Claude checks today's models and asks you four short questions

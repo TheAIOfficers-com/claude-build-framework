@@ -18,7 +18,11 @@ if [ -z "$NAME" ]; then
   exit 1
 fi
 
-# --- validate optional model names before anything is created ---
+# --- validate the project name and optional model names before anything is created ---
+if ! printf '%s' "$NAME" | grep -Eq '^[A-Za-z0-9-]+$'; then
+  echo "ERROR: project name '$NAME' may only contain letters, numbers and dashes." >&2
+  exit 1
+fi
 for m in "$BUILD_MODEL" "$ADVISOR_MODEL"; do
   if [ -n "$m" ] && ! printf '%s' "$m" | grep -Eq '^[A-Za-z0-9._-]+$'; then
     echo "ERROR: model name '$m' may only contain letters, digits, '.', '_' or '-'." >&2
@@ -37,7 +41,7 @@ fi
 # --- read the framework version from CHANGELOG.md ---
 VERSION="unknown"
 if [ -f "$FRAMEWORK_ROOT/CHANGELOG.md" ]; then
-  VERSION="$(grep -oE '^## (v[0-9]+\.[0-9]+\.[0-9]+)' "$FRAMEWORK_ROOT/CHANGELOG.md" | head -n1 | sed 's/^## //')"
+  VERSION="$(grep -oE '^## (v[0-9]+\.[0-9]+\.[0-9]+)' "$FRAMEWORK_ROOT/CHANGELOG.md" | head -n1 | sed 's/^## //' || true)"
   [ -z "$VERSION" ] && VERSION="unknown"
 fi
 
@@ -121,7 +125,7 @@ EOF
 SETTINGS_WRITTEN="no"
 if [ -n "$BUILD_MODEL" ] || [ -n "$ADVISOR_MODEL" ]; then
   mkdir -p "$PROJECT_DIR/.claude"
-  # Settings keys "model" / "advisorModel" checked against Claude Code docs 2026-10-21; re-verify per MODEL-CHECK.md.
+  # Settings key names: single source is MODEL-CHECK.md Step 3.1 — update both together.
   {
     echo "{"
     if [ -n "$BUILD_MODEL" ] && [ -n "$ADVISOR_MODEL" ]; then

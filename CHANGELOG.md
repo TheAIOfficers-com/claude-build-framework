@@ -5,6 +5,16 @@ and how projects pin/upgrade. Newest entries first. Entries are never deleted; r
 superseded by a new entry.
 
 ---
+## v1.7.1 — 2026-10-21
+
+**Source:** post-merge audit of v1.6.0 + v1.7.0 by the best model (the earlier audits ran on the fallback model while the best was out of credits).
+
+- CLAUDE.md Section 17 rule 11: the `new-project` setup arguments write a provisional setting; the first-session model check confirms or replaces it (removes a contradiction).
+- `scripts/new-project.ps1` / `.sh`: the project name is validated (letters, numbers, dashes), as START-HERE already promised; a bad name stops before anything is created.
+- `scripts/new-project.sh`: version lookup no longer exits early under `set -o pipefail` when CHANGELOG has no version line.
+- MODEL-CHECK.md Step 3.1 is the single source for settings key names; scripts point to it.
+- START-HERE and script usage use placeholders, not model names. GOVERNANCE.md Section 5 PR audit prompt asks about client-data leaks and hard-coded model names. deployment_guide.md uses a placeholder instead of a personal path.
+
 ## v1.7.0 — 2026-10-21
 
 **Source:** founder request — models change continuously, so the framework never fixes model names;
