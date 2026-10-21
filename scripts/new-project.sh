@@ -121,6 +121,7 @@ EOF
 SETTINGS_WRITTEN="no"
 if [ -n "$BUILD_MODEL" ] || [ -n "$ADVISOR_MODEL" ]; then
   mkdir -p "$PROJECT_DIR/.claude"
+  # Settings keys "model" / "advisorModel" checked against Claude Code docs 2026-10-21; re-verify per MODEL-CHECK.md.
   {
     echo "{"
     if [ -n "$BUILD_MODEL" ] && [ -n "$ADVISOR_MODEL" ]; then
@@ -132,9 +133,11 @@ if [ -n "$BUILD_MODEL" ] || [ -n "$ADVISOR_MODEL" ]; then
     fi
     echo "}"
   } > "$PROJECT_DIR/.claude/settings.json"
-  printf '\n## Model routing (founder'"'"'s cost override — framework CLAUDE.md Section 16 rule 7)\n\n- Build: %s · Advisor: %s (set in `.claude/settings.json`). Planning and audits stay with the best model.\n' \
-    "${BUILD_MODEL:-default}" "${ADVISOR_MODEL:-none}" >> "$PROJECT_DIR/CLAUDE.md"
+  printf '\n## Model routing (set by the founder at setup, %s; framework CLAUDE.md Section 16 rule 7)\n\n- Build: %s · Advisor: %s (set in `.claude/settings.json`). Planning and audits stay with the best model.\n- Run the framework'"'"'s `MODEL-CHECK.md` in the first session to confirm all four roles against today'"'"'s models.\n' \
+    "$(date +%Y-%m-%d)" "${BUILD_MODEL:-default}" "${ADVISOR_MODEL:-none}" >> "$PROJECT_DIR/CLAUDE.md"
   SETTINGS_WRITTEN="yes"
+else
+  printf '\n## Model routing — not yet confirmed\n\n- Run the framework'"'"'s `MODEL-CHECK.md` in the first session: the founder confirms which model builds, advises, plans/audits and searches.\n' >> "$PROJECT_DIR/CLAUDE.md"
 fi
 
 # --- start git history ---
@@ -159,7 +162,11 @@ echo "  Folder:            $PROJECT_DIR"
 echo "  Framework version: $VERSION (pinned in project-docs/TRD.md)"
 echo "  Planning docs:     $PROJECT_DIR/project-docs/"
 echo "  Audit lessons:     $PROJECT_DIR/$LESSONS_FILE"
-[ "$SETTINGS_WRITTEN" = "yes" ] && echo "  Model routing:     .claude/settings.json (build: ${BUILD_MODEL:-default}, advisor: ${ADVISOR_MODEL:-none})"
+if [ "$SETTINGS_WRITTEN" = "yes" ]; then
+  echo "  Model routing:     .claude/settings.json (build: ${BUILD_MODEL:-default}, advisor: ${ADVISOR_MODEL:-none})"
+else
+  echo "  Model routing:     not set — in the first session say 'check my models' (MODEL-CHECK.md)"
+fi
 [ "$GIT_DONE" = "yes" ] && echo "  Git:               initialised with first commit"
 echo ""
 echo "NEXT STEP: open Claude Code inside this folder and paste the kickoff prompt from START-HERE.md (Step 2)."

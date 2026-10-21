@@ -29,6 +29,7 @@ steps, with zero jargon. If you can unzip a file and paste a prompt, you can use
 | [scripts/](scripts/) | One-command project creation (Windows and Mac/Linux) |
 | [DEFINITION-OF-DONE.md](DEFINITION-OF-DONE.md) | The acceptance checklist — nothing is "done" until it passes |
 | [GLOBAL-AUDIT-LESSONS.md](GLOBAL-AUDIT-LESSONS.md) | Mistakes past audits found, read before every build so no project repeats them |
+| [MODEL-CHECK.md](MODEL-CHECK.md) | Four questions so you confirm which AI model does which job — say "check my models" |
 | [GOVERNANCE.md](GOVERNANCE.md) | How the rules change (only with the owner's approval) and how versions work |
 | [CHANGELOG.md](CHANGELOG.md) | Every change to the framework, with the reason |
 | [standing_instructions.md](standing_instructions.md) | Model Operating Principles for Builder models |

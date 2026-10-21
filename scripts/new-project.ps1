@@ -1,5 +1,5 @@
 # new-project.ps1 — create a new project wired to the TheAIOfficers build framework.
-# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"] [-BuildModel sonnet -AdvisorModel opus]
+# Usage:  & "<framework>\scripts\new-project.ps1" -Name "my-project" [-Path "C:\Users\me\Projects"] [-BuildModel <model> -AdvisorModel <model>]   (e.g. sonnet / opus — example names; run MODEL-CHECK.md)
 # Creates <Path>\<Name> with project-docs/, a framework-wired CLAUDE.md, an audit-lessons file,
 # a version pin, and git history. -BuildModel/-AdvisorModel (optional, founder's choice — CLAUDE.md
 # Section 16 rule 7) write .claude/settings.json; omit them to keep the default model routing.
@@ -118,6 +118,7 @@ Set-Content -Path (Join-Path $ProjectDir $LessonsFile) -Value $LessonsMd -Encodi
 # --- optional model routing (founder's cost override, CLAUDE.md Section 16 rule 7) ---
 $SettingsWritten = $false
 if ($BuildModel -or $AdvisorModel) {
+    # Settings keys 'model' / 'advisorModel' checked against Claude Code docs 2026-10-21; re-verify per MODEL-CHECK.md.
     $Settings = [ordered]@{}
     if ($BuildModel)   { $Settings['model'] = $BuildModel }
     if ($AdvisorModel) { $Settings['advisorModel'] = $AdvisorModel }
@@ -126,8 +127,10 @@ if ($BuildModel -or $AdvisorModel) {
     [IO.File]::WriteAllText((Join-Path $ProjectDir '.claude\settings.json'), ($Settings | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
     $BuildLabel = if ($BuildModel) { $BuildModel } else { 'default' }
     $AdvisorLabel = if ($AdvisorModel) { $AdvisorModel } else { 'none' }
-    Add-Content -Path (Join-Path $ProjectDir 'CLAUDE.md') -Value "`n## Model routing (founder's cost override — framework CLAUDE.md Section 16 rule 7)`n`n- Build: $BuildLabel · Advisor: $AdvisorLabel (set in ``.claude/settings.json``). Planning and audits stay with the best model.`n" -Encoding utf8
+    Add-Content -Path (Join-Path $ProjectDir 'CLAUDE.md') -Value "`n## Model routing (set by the founder at setup, $(Get-Date -Format 'yyyy-MM-dd'); framework CLAUDE.md Section 16 rule 7)`n`n- Build: $BuildLabel · Advisor: $AdvisorLabel (set in ``.claude/settings.json``). Planning and audits stay with the best model.`n- Run the framework's ``MODEL-CHECK.md`` in the first session to confirm all four roles against today's models.`n" -Encoding utf8
     $SettingsWritten = $true
+} else {
+    Add-Content -Path (Join-Path $ProjectDir 'CLAUDE.md') -Value "`n## Model routing — not yet confirmed`n`n- Run the framework's ``MODEL-CHECK.md`` in the first session: the founder confirms which model builds, advises, plans/audits and searches.`n" -Encoding utf8
 }
 
 # --- start git history ---
@@ -154,6 +157,7 @@ Write-Host "  Framework version: $Version (pinned in project-docs\TRD.md)"
 Write-Host "  Planning docs:     $ProjectDir\project-docs\"
 Write-Host "  Audit lessons:     $ProjectDir\$LessonsFile"
 if ($SettingsWritten) { Write-Host "  Model routing:     .claude\settings.json (build: $BuildLabel, advisor: $AdvisorLabel)" }
+else { Write-Host "  Model routing:     not set — in the first session say 'check my models' (MODEL-CHECK.md)" }
 if ($GitAvailable) { Write-Host "  Git:               initialised with first commit" }
 Write-Host ""
 Write-Host "NEXT STEP: open Claude Code inside this folder and paste the kickoff prompt from START-HERE.md (Step 2)." -ForegroundColor Cyan

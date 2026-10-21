@@ -5,6 +5,20 @@ and how projects pin/upgrade. Newest entries first. Entries are never deleted; r
 superseded by a new entry.
 
 ---
+## v1.7.0 — 2026-10-21
+
+**Source:** founder request — models change continuously, so the framework never fixes model names;
+the founder confirms them through a questionnaire with recommendations (design approved 21 Oct 2026).
+
+- Added `MODEL-CHECK.md` — four questions (builder, advisor, planner/auditor, search), recommended by
+  rank with plain-language trade-offs, after verifying today's models; answers recorded with the date.
+- CLAUDE.md Section 17 rule 11: model routing is set only through the model check. Section 16 rule 7
+  points to it. Section 5 file list entry.
+- `scripts/new-project.ps1` / `.sh`: the project CLAUDE.md gets a "Model routing" section — "not yet
+  confirmed, run the model check" when no models are given; otherwise the setup choice with its date.
+- README, START-HERE: "check my models".
+- Why MINOR (GOVERNANCE.md Section 4): a new doc and rule; no rule removed or reversed, no new gate.
+
 ## v1.6.0 — 2026-10-21
 
 **Source:** founder request (a client dashboard build, 21 Oct 2026) — weekly token limits were pausing
